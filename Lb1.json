@@ -1,0 +1,38 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "1 CD, 1 Security Group, and 1 subnet.",
+    "Parameters": {},
+    "Resources": {
+        "loadBalancer": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+                "AvailabilityZones": [
+                    "us-east-1b",
+                    "us-east-1d"
+                ],
+                "LoadBalancerName": "bluegreen-test",
+                "SecurityGroups": [
+                    "sg-36b76a4e"
+                ],
+                "Subnets": [
+                    "subnet-597ca073",
+                    "subnet-dfac0d87"
+                ],
+                "HealthCheck": {
+                    "HealthyThreshold": "2",
+                    "Interval": "5",
+                    "Target": "HTTP:80/",
+                    "Timeout": "3",
+                    "UnhealthyThreshold": "2"
+                  },
+                  "Listeners": [{
+                      "InstancePort": "80",
+                      "InstanceProtocol": "HTTP",
+                      "LoadBalancerPort": "80",
+                      "Protocol": "HTTP"
+                  }],
+                 "Scheme": "internet-facing"
+                }  
+            }
+        }       
+    }
